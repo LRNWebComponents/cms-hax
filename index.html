@@ -13,8 +13,17 @@
     <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 
     <link rel="import" href="/src/cms-hax/cms-hax.html">
+    <style>
+      cms-hax {
+        margin-left: 10em;
+      }
+    </style>
   </head>
   <body>
-    <cms-hax></cms-hax>
+    <cms-hax>
+      <p slot="body">A whole bunch of text in P 1</p>
+      <p slot="body">Something else in P2 here</p>
+      <p slot="body">This is a whole bunch of stuff to be here at this point</p>
+    </cms-hax>
   </body>
 </html>

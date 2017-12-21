@@ -1,7 +1,7 @@
 {
-  "name": "boiler-plate-app",
+  "name": "cms-hax",
   "version": "1.0.0",
-  "description": "A LRN element",
+  "description": "A simple way of integrating HAX into any CMS to save a basic body of content.",
   "main": "index.js",
   "directories": {
     "test": "test"

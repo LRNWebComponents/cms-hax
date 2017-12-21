@@ -6,14 +6,14 @@
   "start_url": "/",
   "display": "standalone",
   "app_integration": {
-    "title": "Boiler Plate App",
+    "title": "HAX App",
     "menu": {
       "menu_name": "menu-elmsln-navigation",
       "weight": 10
     },
     "endpoints": {
       "data": {
-        "callback": "_boiler_plate_app_data",
+        "callback": "_cms_hax_data",
         "property": "source-path"
       }
     }

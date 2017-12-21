@@ -9,14 +9,14 @@
 ```
 -->
 ```html
-<boiler-plate></boiler-plate>
+<cms-hax></cms-hax>
 ```
 
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/LRNWebComponents/boiler-plate)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/LRNWebComponents/cms-hax)
 
-# \<boiler-plate\>
+# \<cms-hax\>
 
-An LRN application
+A simple "app" for integrating HAX as a WYSIWYG editor with default configurations.
 
 ## Install the Polymer-CLI
 
