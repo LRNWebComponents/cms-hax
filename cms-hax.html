@@ -3,8 +3,9 @@
 <link rel="import" href="../hax-body/hax-body.html">
 <link rel="import" href="../hax-body/hax-autoloader.html">
 <link rel="import" href="../hax-body/hax-manager.html">
-<link rel="import" href="../hax-body/hax-source.html">
 <link rel="import" href="../hax-body/hax-panel.html">
+<link rel="import" href="../hax-body/hax-app-picker.html">
+<link rel="import" href="../hax-body/hax-app.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
 <!--
 `cms-hax`
@@ -33,11 +34,11 @@ A LRN polymer app
     <div id="autoloaderslot" hidden><slot name="autoloader"></slot></div>
     <div id="bodyslot" hidden><slot></slot></div>
     <hax-store hidden></hax-store>
-    <hax-autoloader id="loader" hidden></hax-autoloader>
+    <hax-app-picker></hax-app-picker>
     <hax-manager></hax-manager>
     <hax-panel hide-export-button></hax-panel>
     <hax-body id="body" context-offset-left="[[bodyOffsetLeft]]"></hax-body>
-
+    <hax-autoloader id="loader" hidden></hax-autoloader>
     <iron-ajax
       id="pageupdateajax"
       url="[[endPoint]]"
