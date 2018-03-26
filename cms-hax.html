@@ -36,7 +36,7 @@ A LRN polymer app
     <hax-store hidden app-store="[[appStoreConnection]]"></hax-store>
     <hax-app-picker></hax-app-picker>
     <hax-manager></hax-manager>
-    <hax-panel hide-export-button></hax-panel>
+    <hax-panel hide-export-button align="right"></hax-panel>
     <hax-body id="body" context-offset-left="[[bodyOffsetLeft]]"></hax-body>
     <hax-autoloader id="loader" hidden></hax-autoloader>
     <iron-ajax
@@ -71,7 +71,7 @@ A LRN polymer app
          * Connection object for talking to an app store.
          */
         appStoreConnection: {
-        	type: Object,
+          type: Object,
         },
         /**
          * Offset from the left of the body field
@@ -120,7 +120,7 @@ A LRN polymer app
         // @todo, step through slot for both areas injecting them CORRECTLY into the right area
         setTimeout( () => {
           this._slotRemap(this.$.autoloaderslot, this.$.loader);
-          this._slotRemap(this.$.bodyslot, Polymer.HaxStore.instance.haxBody);
+          this._slotRemap(this.$.bodyslot, Polymer.HaxStore.instance.activeHaxBody);
         }, 100);
 
         // notice ANY change to body and bubble up, only when we are attached though
@@ -128,7 +128,7 @@ A LRN polymer app
           Polymer.dom(this.$.body).observeNodes(function(info) {
             if (!this.__lock) {
               this.__lock = true;
-              this.fire('hax-body-content-changed', Polymer.HaxStore.instance.haxBody.haxToContent());
+              this.fire('hax-body-content-changed', Polymer.HaxStore.instance.activeHaxBody.haxToContent());
               setTimeout( () => {
                 this.__lock = false;
               }, 100);
@@ -184,7 +184,7 @@ A LRN polymer app
         // detect we DID have it in edit and then hit save
         else if (oldValue && !newValue) {
           // generate sanitized content
-          this.updatePageData = Polymer.HaxStore.instance.haxBody.haxToContent();
+          this.updatePageData = Polymer.HaxStore.instance.activeHaxBody.haxToContent();
           // send the request
           this.$.pageupdateajax.generateRequest();
         }
