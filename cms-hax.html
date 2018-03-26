@@ -33,7 +33,7 @@ A LRN polymer app
     </style>
     <div id="autoloaderslot" hidden><slot name="autoloader"></slot></div>
     <div id="bodyslot" hidden><slot></slot></div>
-    <hax-store hidden></hax-store>
+    <hax-store hidden app-store="[[appStoreConnection]]"></hax-store>
     <hax-app-picker></hax-app-picker>
     <hax-manager></hax-manager>
     <hax-panel hide-export-button></hax-panel>
@@ -66,6 +66,12 @@ A LRN polymer app
          */
         updatePageData: {
           type: String,
+        },
+        /**
+         * Connection object for talking to an app store.
+         */
+        appStoreConnection: {
+        	type: Object,
         },
         /**
          * Offset from the left of the body field
