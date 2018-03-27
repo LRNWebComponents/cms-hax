@@ -36,7 +36,7 @@ A LRN polymer app
     <hax-store hidden app-store="[[appStoreConnection]]"></hax-store>
     <hax-app-picker></hax-app-picker>
     <hax-manager></hax-manager>
-    <hax-panel hide-export-button align="right"></hax-panel>
+    <hax-panel id="panel" hide-export-button align="right"></hax-panel>
     <hax-body id="body" context-offset-left="[[bodyOffsetLeft]]"></hax-body>
     <hax-autoloader id="loader" hidden></hax-autoloader>
     <iron-ajax
@@ -55,6 +55,13 @@ A LRN polymer app
     Polymer({
       is: 'cms-hax',
       properties: {
+        /**
+         * Default the panel to open
+         */
+        openDefault: {
+          type: Boolean,
+          value: true,
+        },
         /**
          * Location to save content to.
          */
@@ -115,6 +122,10 @@ A LRN polymer app
        * we exist and are the thing being edited.
        */
       attached: function() {
+        // open things by default
+        if (this.openDefault) {
+          this.$.panel.toggle();
+        }
         this.__lock = false;
         document.body.addEventListener('hax-store-property-updated', this._haxStorePropertyUpdated.bind(this));
         // @todo, step through slot for both areas injecting them CORRECTLY into the right area
