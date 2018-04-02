@@ -4,7 +4,8 @@
   "main": "cms-hax.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.10.1",
-    "hax-body": "LRNWebComponents/hax-body#^0.9.6"
+    "hax-body": "LRNWebComponents/hax-body#^0.9.8",
+    "hax-body-behaviors": "LRNWebComponents/hax-body-behaviors#^1.7.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
