@@ -15,15 +15,16 @@
     <link rel="import" href="cms-hax.html">
     <style>
       cms-hax {
-        margin-left: 10em;
+        margin: 10em;
       }
     </style>
   </head>
   <body>
-    <cms-hax>
-      <p slot="body">A whole bunch of text in P 1</p>
-      <p slot="body">Something else in P2 here</p>
-      <p slot="body">This is a whole bunch of stuff to be here at this point</p>
+    <cms-hax align="left" open-default app-store-connection='{"url":"demo/sample-store.json"}'>
+      <p>A whole bunch of text in P 1</p>
+      <p>Something else in P2 here</p>
+      <p>This is a whole bunch of stuff to be here at this point</p>
+      <video-player slot="autoloader"></video-player>
     </cms-hax>
   </body>
 </html>
