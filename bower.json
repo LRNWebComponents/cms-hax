@@ -4,7 +4,7 @@
   "main": "cms-hax.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.10.1",
-    "hax-body": "LRNWebcomponents/hax-body#^0.10.7",
+    "hax-body": "LRNWebcomponents/hax-body#^0.10.8",
     "hax-body-behaviors": "LRNWebcomponents/hax-body-behaviors#^1.10.0",
     "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#^2.1.0",
     "iron-selector": "PolymerElements/iron-selector#^2.1.0",
