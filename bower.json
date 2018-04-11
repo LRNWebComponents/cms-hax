@@ -38,7 +38,6 @@
     "paper-dropdown-menu": "^2.0.0",
     "paper-tooltip": "^2.0.0",
     "iron-overlay-behavior": "^2.2.0",
-    "eco-json-schema-form": "1.0.0-lrn7",
     "iron-selector": "1 - 2"
   }
 }
