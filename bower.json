@@ -8,7 +8,8 @@
     "hax-body-behaviors": "LRNWebcomponents/hax-body-behaviors#^1.10.0",
     "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#^2.1.0",
     "iron-selector": "PolymerElements/iron-selector#^2.1.0",
-    "web-animations-js": "web-animations/web-animations-js#^2.2.0"
+    "web-animations-js": "web-animations/web-animations-js#^2.2.0",
+    "paper-spinner": "PolymerElements/paper-spinner#^2.1.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

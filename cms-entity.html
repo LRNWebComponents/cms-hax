@@ -3,21 +3,18 @@
 <link rel="import" href="../hax-body-behaviors/hax-body-behaviors.html">
 <link rel="import" href="../paper-spinner/paper-spinner.html">
 <!--
-`cms-token`
-Render and process a shortcode / token from a content management system.
+`cms-entity`
+Render and process a  / entity from a content management system.
 
 @demo demo/index.html
 
 @microcopy - the mental model for this element
- - cms - Content management system, while writen against Drupal should be
-         abstract enough to work with just about anything.
- - token - a snippet / shortcode of logic to unpack and turn into something
-           more complex. Usually of the form [actual:thing:here] or
-           [[action|thing=stuff|here=place]] style. Either way, it's a
-           snippet which will get sent to a backend and dynamically replaced.
+ -
+ -
+
 -->
 
-<dom-module id="cms-token">
+<dom-module id="cms-entity">
   <template strip-whitespace>
     <style>
       :host {
@@ -51,12 +48,12 @@ Render and process a shortcode / token from a content management system.
       }
     </style>
     <iron-ajax
-      id="tokenrequest"
+      id="entityrequest"
       method="GET"
       params="[[bodyData]]"
-      url="[[tokenEndPoint]]"
+      url="[[entityEndPoint]]"
       handle-as="json"
-      last-response="{{tokenData}}"></iron-ajax>
+      last-response="{{entityData}}"></iron-ajax>
     <paper-spinner active="[[loading]]"></paper-spinner>
     <span id="replacementcontent"><slot></slot></span>
   </template>
@@ -64,7 +61,7 @@ Render and process a shortcode / token from a content management system.
   <script>
     Polymer({
 
-      is: 'cms-token',
+      is: 'cms-entity',
       behaviors: [HAXBehaviors.PropertiesBehaviors],
       properties: {
         /**
@@ -76,64 +73,78 @@ Render and process a shortcode / token from a content management system.
           value: false,
         },
         /**
-         * Token changed (somehow) do the token processing.
+         * Type of entity to load
          */
-        token: {
+        entityType: {
           type: String,
           reflectToAttribute: true,
         },
         /**
-         * Token end point updated, change the way we do processing.
+         * ID of the item to load
          */
-        tokenEndPoint: {
+        entityId: {
+          type: String,
+          reflectToAttribute: true,
+        },
+        /**
+         * Display mode of the entity
+         */
+        entityDisplayMode: {
+          type: String,
+          reflectToAttribute: true,
+        },
+        /**
+         * entity end point updated, change the way we do processing.
+         */
+        entityEndPoint: {
           type: String,
         },
         /**
-         * Body data which is just token with some encapsulation.
+         * Body data which is just entity with some encapsulation.
          */
         bodyData: {
           type: Object,
-          computed: '_generateBodyData(token)',
-          observer: '_tokenChanged',
+          computed: '_generateBodyData(entityType, entityId, entityDisplayMode)',
+          observer: '_entityChanged',
         },
         /**
-         * Token data from the end point.
+         * entity data from the end point.
          */
-        tokenData: {
+        entityData: {
           type: String,
-          observer: '_handleTokenResponse',
+          observer: '_handleEntityResponse',
         },
         /**
-         * Prefix for the token to be processed
+         * Prefix for the entity to be processed
          */
-        tokenPrefix: {
+        entityPrefix: {
           type: String,
-          value: '[',
+          observer: '[',
         },
         /**
-         * Suffix for the token to be processed
+         * Suffix for the entity to be processed
          */
-        tokenSuffix: {
+        entitySuffix: {
           type: String,
-          value: ']',
+          observer: ']',
         },
       },
       /**
        * Generate body data.
        */
-      _generateBodyData: function(token) {
-        if (token !== null && token !== '') {
-          let tokenPrefix = this.tokenPrefix;
-          let tokenSuffix = this.tokenSuffix;
+      _generateBodyData: function(entityType, entityId, entityDisplayMode) {
+        if (entityType !== null && entityType !== '' && entityId !== null && entityId !== '') {
           return {
-            'token': `${tokenPrefix}${token}${tokenSuffix}`,
+            'type': `${entityType}`,
+            'id': `${entityId}`,
+            'display_mode': `${entityDisplayMode}`,
           };
         }
       },
       /**
-       * Handle the response from the token processing endpoint
+       * Handle the response from the entity processing endpoint
        */
-      _handleTokenResponse: function(newValue, oldValue) {
+      _handleEntityResponse: function(newValue, oldValue) {
         if (newValue !== null && typeof newValue.content !== typeof undefined) {
           // wipe our own slot here
           this.wipeSlot(Polymer.dom(this));
@@ -158,19 +169,19 @@ Render and process a shortcode / token from a content management system.
         }
       },
       /**
-       * Token end point changed
+       * entity end point changed
        */
-      _tokenChanged: function(newValue, oldValue) {
+      _entityChanged: function(newValue, oldValue) {
         // ensure we have something and are not loading currently
         if (typeof newValue !== typeof undefined && newValue !== '' && !this.loading) {
           // support going from a null element to a real one
-          if (typeof this.tokenEndPoint === typeof undefined && typeof window.cmstokenEndPoint !== typeof undefined) {
-            this.tokenEndPoint = window.cmstokenEndPoint;
+          if (typeof this.entityEndPoint === typeof undefined && typeof window.cmsentityEndPoint !== typeof undefined) {
+            this.entityEndPoint = window.cmsentityEndPoint;
           }
-          if (this.tokenEndPoint) {
+          if (this.entityEndPoint) {
             this.loading = true;
             this.async(() => {
-              this.$.tokenrequest.generateRequest();
+              this.$.entityrequest.generateRequest();
             });
           }
         }
@@ -179,20 +190,20 @@ Render and process a shortcode / token from a content management system.
        * Attached to the DOM, now fire.
        */
       attached: function() {
-        if (typeof this.token !== typeof undefined && this.token !== null && this.token !== '') {
+        if (typeof this.entity !== typeof undefined && this.entity !== null && this.entity !== '') {
           let slot = Polymer.dom(this).getEffectiveChildNodes();
           // only kick off request if there's nothing in it
           // if it has something in it that means we did some
           // remote rendering ahead of time
           if (slot.length === 0 && !this.loading) {
-            // support for autoloading the token data needed for the request from globals
-            if (typeof this.tokenEndPoint === typeof undefined && typeof window.cmstokenEndPoint !== typeof undefined) {
-              this.tokenEndPoint = window.cmstokenEndPoint;
+            // support for autoloading the entity data needed for the request from globals
+            if (typeof this.entityEndPoint === typeof undefined && typeof window.cmsentityEndPoint !== typeof undefined) {
+              this.entityEndPoint = window.cmsentityEndPoint;
             }
-            if (this.tokenEndPoint) {
+            if (this.entityEndPoint) {
               this.loading = true;
               this.async(() => {
-                this.$.tokenrequest.generateRequest();
+                this.$.entityrequest.generateRequest();
               });            }
           }
         }
@@ -202,15 +213,15 @@ Render and process a shortcode / token from a content management system.
           'canPosition': true,
           'canEditSource': false,
           'gizmo': {
-            'title': 'CMS Token',
-            'description': 'CMS token rendered on the backend',
-            'icon': 'icons:code',
+            'title': 'CMS Entity',
+            'description': 'CMS entity rendered on the backend',
+            'icon': 'places:spa',
             'color': 'light-blue',
             'groups': ['CMS'],
             'handles': [
               {
-                'type': 'cmstoken',
-                'token': 'token'
+                'type': 'cmsentity',
+                'entity': 'entity'
               }
             ],
             'meta': {
@@ -222,9 +233,28 @@ Render and process a shortcode / token from a content management system.
             ],
             'configure': [
               {
-                'property': 'token',
-                'title': 'Token',
-                'description': 'Token from our CMS',
+                'property': 'entityType',
+                'title': 'Type',
+                'description': 'type from our CMS',
+                'inputMethod': 'select',
+                'options': {
+                  'node': 'Node',
+                  'user': 'User',
+                  'file': 'File',
+                },
+                'icon': 'editor:title',
+              },
+              {
+                'property': 'entityID',
+                'title': 'ID',
+                'description': 'id from our CMS',
+                'inputMethod': 'textfield',
+                'icon': 'editor:title',
+              },
+              {
+                'property': 'entityDisplayMode',
+                'title': 'Display mode',
+                'description': 'display mode from our CMS',
                 'inputMethod': 'textfield',
                 'icon': 'editor:title',
               },
@@ -247,9 +277,9 @@ Render and process a shortcode / token from a content management system.
        */
       preProcessHaxNodeToContent: function(clone) {
         clone.removeAttribute('loading');
-        clone.removeAttribute('token-data');
+        clone.removeAttribute('entity-data');
         clone.removeAttribute('body-data');
-        clone.removeAttribute('token-end-point');
+        clone.removeAttribute('entity-end-point');
         return clone;
       },
     });
