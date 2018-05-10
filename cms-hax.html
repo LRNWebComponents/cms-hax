@@ -44,7 +44,7 @@ A LRN polymer app
     <iron-ajax
       id="pageupdateajax"
       url="[[endPoint]]"
-      method="PUT"
+      method="[[method]]"
       body="[[updatePageData]]"
       content-type="application/json"
       handle-as="json"
@@ -86,6 +86,13 @@ A LRN polymer app
          */
         endPoint: {
           type: String,
+        },
+        /**
+         * Method to save content.
+         */
+        method: {
+          type: String,
+          value: 'PUT',
         },
         /**
          * Page data, body of text as a string.
