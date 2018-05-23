@@ -34,7 +34,7 @@ A LRN polymer app
     </style>
     <div id="autoloaderslot" hidden><slot name="autoloader"></slot></div>
     <div id="bodyslot" hidden><slot></slot></div>
-    <hax-store hidden app-store="[[appStoreConnection]]"></hax-store>
+    <hax-store hidden app-store="[[appStoreConnection]]" valid-tag-list="[[allowedTags]]"></hax-store>
     <hax-autoloader id="loader" hidden></hax-autoloader>
     <hax-panel id="panel" hide-export-button="{{hideExportButton}}" align="[[align]]"></hax-panel>
     <hax-body id="body" context-offset-left="[[bodyOffsetLeft]]"></hax-body>
@@ -80,6 +80,16 @@ A LRN polymer app
         align: {
           type: String,
           value: 'right',
+        },
+        /**
+         * allowed Tags, usually as dictated by the input filtering
+         * layer of the backend system that HAX is riding on.
+         * While not fullproof, this at least will enforce front-end
+         * filtering to match what actually is going to be allowed
+         * to be saved in the first place.
+         */
+        allowedTags: {
+          type: Array,
         },
         /**
          * Location to save content to.
