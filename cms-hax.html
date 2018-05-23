@@ -119,7 +119,6 @@ A LRN polymer app
         editMode: {
           type: Boolean,
           reflectToAttribute: true,
-          observer: '_editModeChanged',
         },
         /**
          * syncBody
@@ -150,6 +149,7 @@ A LRN polymer app
       attached: function() {
         this.__lock = false;
         document.body.addEventListener('hax-store-property-updated', this._haxStorePropertyUpdated.bind(this));
+        document.body.addEventListener('hax-save', this._saveFired.bind(this));
         // @todo, step through slot for both areas injecting them CORRECTLY into the right area
         setTimeout( () => {
           this._slotRemap(this.$.autoloaderslot, this.$.loader);
@@ -212,19 +212,13 @@ A LRN polymer app
         }
       },
       /**
-       * _editModeChanged
+       * _saveFired
        */
-      _editModeChanged: function(newValue, oldValue) {
-        if (typeof newValue !== typeof undefined && newValue) {
-          this.__tipText = 'save';
-        }
-        // detect we DID have it in edit and then hit save
-        else if (oldValue && !newValue) {
-          // generate sanitized content
-          this.updatePageData = Polymer.HaxStore.instance.activeHaxBody.haxToContent();
-          // send the request
-          this.$.pageupdateajax.generateRequest();
-        }
+      _saveFired: function(e) {
+        // generate sanitized content
+        this.updatePageData = Polymer.HaxStore.instance.activeHaxBody.haxToContent();
+        // send the request
+        this.$.pageupdateajax.generateRequest();
       },
       /**
        * _handleUpdateResponse
