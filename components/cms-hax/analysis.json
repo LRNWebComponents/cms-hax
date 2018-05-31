@@ -1,0 +1,3381 @@
+{
+  "schema_version": "1.0.0",
+  "elements": [
+    {
+      "description": "`cms-token`\nRender and process a shortcode / token from a content management system.",
+      "summary": "",
+      "path": "cms-token.html",
+      "properties": [
+        {
+          "name": "haxProperties",
+          "type": "Object",
+          "description": "haxProperties",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 140,
+              "column": 6
+            },
+            "end": {
+              "line": 154,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          },
+          "defaultValue": "{\"canScale\":false,\"canPosition\":false,\"canEditSource\":false,\"settings\":{\"quick\":[],\"configure\":[],\"advanced\":[]},\"wipeSlot\":{}}",
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "description": "Loading state",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 72,
+              "column": 8
+            },
+            "end": {
+              "line": 76,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "token",
+          "type": "string",
+          "description": "Token changed (somehow) do the token processing.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 80,
+              "column": 8
+            },
+            "end": {
+              "line": 83,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "tokenEndPoint",
+          "type": "string",
+          "description": "Token end point updated, change the way we do processing.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 87,
+              "column": 8
+            },
+            "end": {
+              "line": 89,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "bodyData",
+          "type": "Object",
+          "description": "Body data which is just token with some encapsulation.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 93,
+              "column": 8
+            },
+            "end": {
+              "line": 97,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_tokenChanged\"",
+              "readOnly": true
+            }
+          }
+        },
+        {
+          "name": "tokenData",
+          "type": "string",
+          "description": "Token data from the end point.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 101,
+              "column": 8
+            },
+            "end": {
+              "line": 104,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_handleTokenResponse\""
+            }
+          }
+        },
+        {
+          "name": "tokenPrefix",
+          "type": "string",
+          "description": "Prefix for the token to be processed",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 108,
+              "column": 8
+            },
+            "end": {
+              "line": 111,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"[\""
+        },
+        {
+          "name": "tokenSuffix",
+          "type": "string",
+          "description": "Suffix for the token to be processed",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 115,
+              "column": 8
+            },
+            "end": {
+              "line": 118,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"]\""
+        }
+      ],
+      "methods": [
+        {
+          "name": "setHaxProperties",
+          "description": "Setter to bridge private haxProperties setter.\nThis is to then be implemented by the ready state of whatever is supplying the\nproperties in order to be able to bubble up the properties for a tag.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 161,
+              "column": 4
+            },
+            "end": {
+              "line": 290,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "props"
+            },
+            {
+              "name": "tag",
+              "defaultValue": "''"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "validateSetting",
+          "description": "Validate settings object.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 294,
+              "column": 4
+            },
+            "end": {
+              "line": 341,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "setting"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxProperties",
+          "description": "Match convention for set.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 345,
+              "column": 4
+            },
+            "end": {
+              "line": 347,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxJSONSchema",
+          "description": "Convert haxProperties structure to a simple json-schema.\nThis allows for complex form building systems based on this data.\ntype is configure or advanced",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 353,
+              "column": 4
+            },
+            "end": {
+              "line": 370,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            },
+            {
+              "name": "haxProperties"
+            },
+            {
+              "name": "target = this"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "_getHaxJSONSchemaProperty",
+          "description": "Internal helper for getHaxJSONSchema to buiild the properties object\ncorrectly with support for recursive nesting thx to objects / arrays.",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 375,
+              "column": 4
+            },
+            "end": {
+              "line": 631,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "settings"
+            },
+            {
+              "name": "target"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxJSONSchemaType",
+          "description": "Convert input method to schedma type",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 635,
+              "column": 4
+            },
+            "end": {
+              "line": 661,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "inputMethod"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "validHAXPropertyInputMethod",
+          "description": "List valid input methods.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 665,
+              "column": 4
+            },
+            "end": {
+              "line": 668,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "prototypeHaxProperties",
+          "description": "Return a haxProperties prototype / example structure",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 672,
+              "column": 4
+            },
+            "end": {
+              "line": 773,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "_generateBodyData",
+          "description": "Generate body data.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 123,
+              "column": 6
+            },
+            "end": {
+              "line": 131,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "token"
+            }
+          ]
+        },
+        {
+          "name": "_handleTokenResponse",
+          "description": "Handle the response from the token processing endpoint",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 135,
+              "column": 6
+            },
+            "end": {
+              "line": 150,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newValue"
+            },
+            {
+              "name": "oldValue"
+            }
+          ]
+        },
+        {
+          "name": "wipeSlot",
+          "description": "wipe out the slot",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 154,
+              "column": 6
+            },
+            "end": {
+              "line": 158,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "element"
+            }
+          ]
+        },
+        {
+          "name": "_tokenChanged",
+          "description": "Token end point changed",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 162,
+              "column": 6
+            },
+            "end": {
+              "line": 176,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newValue"
+            },
+            {
+              "name": "oldValue"
+            }
+          ]
+        },
+        {
+          "name": "attached",
+          "description": "Attached to the DOM, now fire.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 180,
+              "column": 6
+            },
+            "end": {
+              "line": 239,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "preProcessHaxNodeToContent",
+          "description": "Standard internal callback for responding to\na request from hax-body to convert it to content.\nThis can be used just prior to that callback in order to clean up\nthe element. Calls to make modifications are against a clone\nof the element.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 247,
+              "column": 6
+            },
+            "end": {
+              "line": 253,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "clone"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "demo/index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 64,
+          "column": 12
+        },
+        "end": {
+          "line": 254,
+          "column": 5
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "hax-properties",
+          "description": "haxProperties",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 140,
+              "column": 6
+            },
+            "end": {
+              "line": 154,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object",
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "loading",
+          "description": "Loading state",
+          "sourceRange": {
+            "start": {
+              "line": 72,
+              "column": 8
+            },
+            "end": {
+              "line": 76,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "token",
+          "description": "Token changed (somehow) do the token processing.",
+          "sourceRange": {
+            "start": {
+              "line": 80,
+              "column": 8
+            },
+            "end": {
+              "line": 83,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "token-end-point",
+          "description": "Token end point updated, change the way we do processing.",
+          "sourceRange": {
+            "start": {
+              "line": 87,
+              "column": 8
+            },
+            "end": {
+              "line": 89,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "body-data",
+          "description": "Body data which is just token with some encapsulation.",
+          "sourceRange": {
+            "start": {
+              "line": 93,
+              "column": 8
+            },
+            "end": {
+              "line": 97,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "token-data",
+          "description": "Token data from the end point.",
+          "sourceRange": {
+            "start": {
+              "line": 101,
+              "column": 8
+            },
+            "end": {
+              "line": 104,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "token-prefix",
+          "description": "Prefix for the token to be processed",
+          "sourceRange": {
+            "start": {
+              "line": 108,
+              "column": 8
+            },
+            "end": {
+              "line": 111,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "token-suffix",
+          "description": "Suffix for the token to be processed",
+          "sourceRange": {
+            "start": {
+              "line": 115,
+              "column": 8
+            },
+            "end": {
+              "line": 118,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        }
+      ],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "",
+          "range": {
+            "file": "cms-token.html",
+            "start": {
+              "line": 60,
+              "column": 34
+            },
+            "end": {
+              "line": 60,
+              "column": 47
+            }
+          }
+        }
+      ],
+      "tagname": "cms-token"
+    },
+    {
+      "description": "`cms-block`\nRender and process a  / block from a content management system.",
+      "summary": "",
+      "path": "cms-block.html",
+      "properties": [
+        {
+          "name": "haxProperties",
+          "type": "Object",
+          "description": "haxProperties",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 140,
+              "column": 6
+            },
+            "end": {
+              "line": 154,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          },
+          "defaultValue": "{\"canScale\":false,\"canPosition\":false,\"canEditSource\":false,\"settings\":{\"quick\":[],\"configure\":[],\"advanced\":[]},\"wipeSlot\":{}}",
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "description": "Loading state",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 69,
+              "column": 8
+            },
+            "end": {
+              "line": 73,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "blockModule",
+          "type": "string",
+          "description": "Module supplying the block",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 77,
+              "column": 8
+            },
+            "end": {
+              "line": 80,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "blockDelta",
+          "type": "string",
+          "description": "A delta value relative to the module",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 84,
+              "column": 8
+            },
+            "end": {
+              "line": 87,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "blockEndPoint",
+          "type": "string",
+          "description": "block end point updated, change the way we do processing.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 91,
+              "column": 8
+            },
+            "end": {
+              "line": 93,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "bodyData",
+          "type": "Object",
+          "description": "Body data which is just block with some encapsulation.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 97,
+              "column": 8
+            },
+            "end": {
+              "line": 101,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_blockChanged\"",
+              "readOnly": true
+            }
+          }
+        },
+        {
+          "name": "blockData",
+          "type": "string",
+          "description": "block data from the end point.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 105,
+              "column": 8
+            },
+            "end": {
+              "line": 108,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_handleblockResponse\""
+            }
+          }
+        },
+        {
+          "name": "blockPrefix",
+          "type": "string",
+          "description": "Prefix for the block to be processed",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 112,
+              "column": 8
+            },
+            "end": {
+              "line": 115,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"[\""
+            }
+          }
+        },
+        {
+          "name": "blockSuffix",
+          "type": "string",
+          "description": "Suffix for the block to be processed",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 8
+            },
+            "end": {
+              "line": 122,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"]\""
+            }
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "setHaxProperties",
+          "description": "Setter to bridge private haxProperties setter.\nThis is to then be implemented by the ready state of whatever is supplying the\nproperties in order to be able to bubble up the properties for a tag.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 161,
+              "column": 4
+            },
+            "end": {
+              "line": 290,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "props"
+            },
+            {
+              "name": "tag",
+              "defaultValue": "''"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "validateSetting",
+          "description": "Validate settings object.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 294,
+              "column": 4
+            },
+            "end": {
+              "line": 341,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "setting"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxProperties",
+          "description": "Match convention for set.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 345,
+              "column": 4
+            },
+            "end": {
+              "line": 347,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxJSONSchema",
+          "description": "Convert haxProperties structure to a simple json-schema.\nThis allows for complex form building systems based on this data.\ntype is configure or advanced",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 353,
+              "column": 4
+            },
+            "end": {
+              "line": 370,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            },
+            {
+              "name": "haxProperties"
+            },
+            {
+              "name": "target = this"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "_getHaxJSONSchemaProperty",
+          "description": "Internal helper for getHaxJSONSchema to buiild the properties object\ncorrectly with support for recursive nesting thx to objects / arrays.",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 375,
+              "column": 4
+            },
+            "end": {
+              "line": 631,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "settings"
+            },
+            {
+              "name": "target"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxJSONSchemaType",
+          "description": "Convert input method to schedma type",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 635,
+              "column": 4
+            },
+            "end": {
+              "line": 661,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "inputMethod"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "validHAXPropertyInputMethod",
+          "description": "List valid input methods.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 665,
+              "column": 4
+            },
+            "end": {
+              "line": 668,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "prototypeHaxProperties",
+          "description": "Return a haxProperties prototype / example structure",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 672,
+              "column": 4
+            },
+            "end": {
+              "line": 773,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "_generateBodyData",
+          "description": "Generate body data.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 127,
+              "column": 6
+            },
+            "end": {
+              "line": 134,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "blockModule"
+            },
+            {
+              "name": "blockDelta"
+            }
+          ]
+        },
+        {
+          "name": "_handleblockResponse",
+          "description": "Handle the response from the block processing endpoint",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 138,
+              "column": 6
+            },
+            "end": {
+              "line": 153,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newValue"
+            },
+            {
+              "name": "oldValue"
+            }
+          ]
+        },
+        {
+          "name": "wipeSlot",
+          "description": "wipe out the slot",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 157,
+              "column": 6
+            },
+            "end": {
+              "line": 161,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "element"
+            }
+          ]
+        },
+        {
+          "name": "_blockChanged",
+          "description": "block end point changed",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 165,
+              "column": 6
+            },
+            "end": {
+              "line": 179,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newValue"
+            },
+            {
+              "name": "oldValue"
+            }
+          ]
+        },
+        {
+          "name": "attached",
+          "description": "Attached to the DOM, now fire.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 183,
+              "column": 6
+            },
+            "end": {
+              "line": 249,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "preProcessHaxNodeToContent",
+          "description": "Standard internal callback for responding to\na request from hax-body to convert it to content.\nThis can be used just prior to that callback in order to clean up\nthe element. Calls to make modifications are against a clone\nof the element.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 257,
+              "column": 6
+            },
+            "end": {
+              "line": 263,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "clone"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "demo/index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 61,
+          "column": 12
+        },
+        "end": {
+          "line": 264,
+          "column": 5
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "hax-properties",
+          "description": "haxProperties",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 140,
+              "column": 6
+            },
+            "end": {
+              "line": 154,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object",
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "loading",
+          "description": "Loading state",
+          "sourceRange": {
+            "start": {
+              "line": 69,
+              "column": 8
+            },
+            "end": {
+              "line": 73,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "block-module",
+          "description": "Module supplying the block",
+          "sourceRange": {
+            "start": {
+              "line": 77,
+              "column": 8
+            },
+            "end": {
+              "line": 80,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "block-delta",
+          "description": "A delta value relative to the module",
+          "sourceRange": {
+            "start": {
+              "line": 84,
+              "column": 8
+            },
+            "end": {
+              "line": 87,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "block-end-point",
+          "description": "block end point updated, change the way we do processing.",
+          "sourceRange": {
+            "start": {
+              "line": 91,
+              "column": 8
+            },
+            "end": {
+              "line": 93,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "body-data",
+          "description": "Body data which is just block with some encapsulation.",
+          "sourceRange": {
+            "start": {
+              "line": 97,
+              "column": 8
+            },
+            "end": {
+              "line": 101,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "block-data",
+          "description": "block data from the end point.",
+          "sourceRange": {
+            "start": {
+              "line": 105,
+              "column": 8
+            },
+            "end": {
+              "line": 108,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "block-prefix",
+          "description": "Prefix for the block to be processed",
+          "sourceRange": {
+            "start": {
+              "line": 112,
+              "column": 8
+            },
+            "end": {
+              "line": 115,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "block-suffix",
+          "description": "Suffix for the block to be processed",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 8
+            },
+            "end": {
+              "line": 122,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        }
+      ],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "",
+          "range": {
+            "file": "cms-block.html",
+            "start": {
+              "line": 57,
+              "column": 34
+            },
+            "end": {
+              "line": 57,
+              "column": 47
+            }
+          }
+        }
+      ],
+      "tagname": "cms-block"
+    },
+    {
+      "description": "`cms-views`\nRender and process a  / views from a content management system.",
+      "summary": "",
+      "path": "cms-views.html",
+      "properties": [
+        {
+          "name": "haxProperties",
+          "type": "Object",
+          "description": "haxProperties",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 140,
+              "column": 6
+            },
+            "end": {
+              "line": 154,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          },
+          "defaultValue": "{\"canScale\":false,\"canPosition\":false,\"canEditSource\":false,\"settings\":{\"quick\":[],\"configure\":[],\"advanced\":[]},\"wipeSlot\":{}}",
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "description": "Loading state",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 69,
+              "column": 8
+            },
+            "end": {
+              "line": 73,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "viewsName",
+          "type": "string",
+          "description": "Name of the views to render",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 77,
+              "column": 8
+            },
+            "end": {
+              "line": 80,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "viewsDisplay",
+          "type": "string",
+          "description": "Display from the views",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 84,
+              "column": 8
+            },
+            "end": {
+              "line": 87,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "viewsEndPoint",
+          "type": "string",
+          "description": "views end point updated, change the way we do processing.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 91,
+              "column": 8
+            },
+            "end": {
+              "line": 93,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "bodyData",
+          "type": "Object",
+          "description": "Body data which is just views with some encapsulation.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 97,
+              "column": 8
+            },
+            "end": {
+              "line": 101,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_viewsChanged\"",
+              "readOnly": true
+            }
+          }
+        },
+        {
+          "name": "viewsData",
+          "type": "string",
+          "description": "views data from the end point.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 105,
+              "column": 8
+            },
+            "end": {
+              "line": 108,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_handleviewsResponse\""
+            }
+          }
+        },
+        {
+          "name": "viewsPrefix",
+          "type": "string",
+          "description": "Prefix for the views to be processed",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 112,
+              "column": 8
+            },
+            "end": {
+              "line": 115,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"[\""
+            }
+          }
+        },
+        {
+          "name": "viewsSuffix",
+          "type": "string",
+          "description": "Suffix for the views to be processed",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 8
+            },
+            "end": {
+              "line": 122,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"]\""
+            }
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "setHaxProperties",
+          "description": "Setter to bridge private haxProperties setter.\nThis is to then be implemented by the ready state of whatever is supplying the\nproperties in order to be able to bubble up the properties for a tag.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 161,
+              "column": 4
+            },
+            "end": {
+              "line": 290,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "props"
+            },
+            {
+              "name": "tag",
+              "defaultValue": "''"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "validateSetting",
+          "description": "Validate settings object.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 294,
+              "column": 4
+            },
+            "end": {
+              "line": 341,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "setting"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxProperties",
+          "description": "Match convention for set.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 345,
+              "column": 4
+            },
+            "end": {
+              "line": 347,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxJSONSchema",
+          "description": "Convert haxProperties structure to a simple json-schema.\nThis allows for complex form building systems based on this data.\ntype is configure or advanced",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 353,
+              "column": 4
+            },
+            "end": {
+              "line": 370,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            },
+            {
+              "name": "haxProperties"
+            },
+            {
+              "name": "target = this"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "_getHaxJSONSchemaProperty",
+          "description": "Internal helper for getHaxJSONSchema to buiild the properties object\ncorrectly with support for recursive nesting thx to objects / arrays.",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 375,
+              "column": 4
+            },
+            "end": {
+              "line": 631,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "settings"
+            },
+            {
+              "name": "target"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxJSONSchemaType",
+          "description": "Convert input method to schedma type",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 635,
+              "column": 4
+            },
+            "end": {
+              "line": 661,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "inputMethod"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "validHAXPropertyInputMethod",
+          "description": "List valid input methods.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 665,
+              "column": 4
+            },
+            "end": {
+              "line": 668,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "prototypeHaxProperties",
+          "description": "Return a haxProperties prototype / example structure",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 672,
+              "column": 4
+            },
+            "end": {
+              "line": 773,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "_generateBodyData",
+          "description": "Generate body data.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 127,
+              "column": 6
+            },
+            "end": {
+              "line": 134,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "display"
+            }
+          ]
+        },
+        {
+          "name": "_handleviewsResponse",
+          "description": "Handle the response from the views processing endpoint",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 138,
+              "column": 6
+            },
+            "end": {
+              "line": 153,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newValue"
+            },
+            {
+              "name": "oldValue"
+            }
+          ]
+        },
+        {
+          "name": "wipeSlot",
+          "description": "wipe out the slot",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 157,
+              "column": 6
+            },
+            "end": {
+              "line": 161,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "element"
+            }
+          ]
+        },
+        {
+          "name": "_viewsChanged",
+          "description": "views end point changed",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 165,
+              "column": 6
+            },
+            "end": {
+              "line": 179,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newValue"
+            },
+            {
+              "name": "oldValue"
+            }
+          ]
+        },
+        {
+          "name": "attached",
+          "description": "Attached to the DOM, now fire.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 183,
+              "column": 6
+            },
+            "end": {
+              "line": 249,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "preProcessHaxNodeToContent",
+          "description": "Standard internal callback for responding to\na request from hax-body to convert it to content.\nThis can be used just prior to that callback in order to clean up\nthe element. Calls to make modifications are against a clone\nof the element.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 257,
+              "column": 6
+            },
+            "end": {
+              "line": 263,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "clone"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "demo/index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 61,
+          "column": 12
+        },
+        "end": {
+          "line": 264,
+          "column": 5
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "hax-properties",
+          "description": "haxProperties",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 140,
+              "column": 6
+            },
+            "end": {
+              "line": 154,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object",
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "loading",
+          "description": "Loading state",
+          "sourceRange": {
+            "start": {
+              "line": 69,
+              "column": 8
+            },
+            "end": {
+              "line": 73,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "views-name",
+          "description": "Name of the views to render",
+          "sourceRange": {
+            "start": {
+              "line": 77,
+              "column": 8
+            },
+            "end": {
+              "line": 80,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "views-display",
+          "description": "Display from the views",
+          "sourceRange": {
+            "start": {
+              "line": 84,
+              "column": 8
+            },
+            "end": {
+              "line": 87,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "views-end-point",
+          "description": "views end point updated, change the way we do processing.",
+          "sourceRange": {
+            "start": {
+              "line": 91,
+              "column": 8
+            },
+            "end": {
+              "line": 93,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "body-data",
+          "description": "Body data which is just views with some encapsulation.",
+          "sourceRange": {
+            "start": {
+              "line": 97,
+              "column": 8
+            },
+            "end": {
+              "line": 101,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "views-data",
+          "description": "views data from the end point.",
+          "sourceRange": {
+            "start": {
+              "line": 105,
+              "column": 8
+            },
+            "end": {
+              "line": 108,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "views-prefix",
+          "description": "Prefix for the views to be processed",
+          "sourceRange": {
+            "start": {
+              "line": 112,
+              "column": 8
+            },
+            "end": {
+              "line": 115,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "views-suffix",
+          "description": "Suffix for the views to be processed",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 8
+            },
+            "end": {
+              "line": 122,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        }
+      ],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "",
+          "range": {
+            "file": "cms-views.html",
+            "start": {
+              "line": 57,
+              "column": 34
+            },
+            "end": {
+              "line": 57,
+              "column": 47
+            }
+          }
+        }
+      ],
+      "tagname": "cms-views"
+    },
+    {
+      "description": "`cms-entity`\nRender and process a  / entity from a content management system.",
+      "summary": "",
+      "path": "cms-entity.html",
+      "properties": [
+        {
+          "name": "haxProperties",
+          "type": "Object",
+          "description": "haxProperties",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 140,
+              "column": 6
+            },
+            "end": {
+              "line": 154,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          },
+          "defaultValue": "{\"canScale\":false,\"canPosition\":false,\"canEditSource\":false,\"settings\":{\"quick\":[],\"configure\":[],\"advanced\":[]},\"wipeSlot\":{}}",
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "description": "Loading state",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 69,
+              "column": 8
+            },
+            "end": {
+              "line": 73,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "entityType",
+          "type": "string",
+          "description": "Type of entity to load",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 77,
+              "column": 8
+            },
+            "end": {
+              "line": 80,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "entityId",
+          "type": "string",
+          "description": "ID of the item to load",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 84,
+              "column": 8
+            },
+            "end": {
+              "line": 87,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "entityDisplayMode",
+          "type": "string",
+          "description": "Display mode of the entity",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 91,
+              "column": 8
+            },
+            "end": {
+              "line": 94,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "entityEndPoint",
+          "type": "string",
+          "description": "entity end point updated, change the way we do processing.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 98,
+              "column": 8
+            },
+            "end": {
+              "line": 100,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "bodyData",
+          "type": "Object",
+          "description": "Body data which is just entity with some encapsulation.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 104,
+              "column": 8
+            },
+            "end": {
+              "line": 108,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_entityChanged\"",
+              "readOnly": true
+            }
+          }
+        },
+        {
+          "name": "entityData",
+          "type": "string",
+          "description": "entity data from the end point.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 112,
+              "column": 8
+            },
+            "end": {
+              "line": 115,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_handleEntityResponse\""
+            }
+          }
+        },
+        {
+          "name": "entityPrefix",
+          "type": "string",
+          "description": "Prefix for the entity to be processed",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 8
+            },
+            "end": {
+              "line": 122,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"[\""
+            }
+          }
+        },
+        {
+          "name": "entitySuffix",
+          "type": "string",
+          "description": "Suffix for the entity to be processed",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 126,
+              "column": 8
+            },
+            "end": {
+              "line": 129,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"]\""
+            }
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "setHaxProperties",
+          "description": "Setter to bridge private haxProperties setter.\nThis is to then be implemented by the ready state of whatever is supplying the\nproperties in order to be able to bubble up the properties for a tag.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 161,
+              "column": 4
+            },
+            "end": {
+              "line": 290,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "props"
+            },
+            {
+              "name": "tag",
+              "defaultValue": "''"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "validateSetting",
+          "description": "Validate settings object.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 294,
+              "column": 4
+            },
+            "end": {
+              "line": 341,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "setting"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxProperties",
+          "description": "Match convention for set.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 345,
+              "column": 4
+            },
+            "end": {
+              "line": 347,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxJSONSchema",
+          "description": "Convert haxProperties structure to a simple json-schema.\nThis allows for complex form building systems based on this data.\ntype is configure or advanced",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 353,
+              "column": 4
+            },
+            "end": {
+              "line": 370,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            },
+            {
+              "name": "haxProperties"
+            },
+            {
+              "name": "target = this"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "_getHaxJSONSchemaProperty",
+          "description": "Internal helper for getHaxJSONSchema to buiild the properties object\ncorrectly with support for recursive nesting thx to objects / arrays.",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 375,
+              "column": 4
+            },
+            "end": {
+              "line": 631,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "settings"
+            },
+            {
+              "name": "target"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "getHaxJSONSchemaType",
+          "description": "Convert input method to schedma type",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 635,
+              "column": 4
+            },
+            "end": {
+              "line": 661,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "inputMethod"
+            }
+          ],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "validHAXPropertyInputMethod",
+          "description": "List valid input methods.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 665,
+              "column": 4
+            },
+            "end": {
+              "line": 668,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "prototypeHaxProperties",
+          "description": "Return a haxProperties prototype / example structure",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 672,
+              "column": 4
+            },
+            "end": {
+              "line": 773,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "_generateBodyData",
+          "description": "Generate body data.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 134,
+              "column": 6
+            },
+            "end": {
+              "line": 142,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "entityType"
+            },
+            {
+              "name": "entityId"
+            },
+            {
+              "name": "entityDisplayMode"
+            }
+          ]
+        },
+        {
+          "name": "_handleEntityResponse",
+          "description": "Handle the response from the entity processing endpoint",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 146,
+              "column": 6
+            },
+            "end": {
+              "line": 161,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newValue"
+            },
+            {
+              "name": "oldValue"
+            }
+          ]
+        },
+        {
+          "name": "wipeSlot",
+          "description": "wipe out the slot",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 165,
+              "column": 6
+            },
+            "end": {
+              "line": 169,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "element"
+            }
+          ]
+        },
+        {
+          "name": "_entityChanged",
+          "description": "entity end point changed",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 173,
+              "column": 6
+            },
+            "end": {
+              "line": 187,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newValue"
+            },
+            {
+              "name": "oldValue"
+            }
+          ]
+        },
+        {
+          "name": "attached",
+          "description": "Attached to the DOM, now fire.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 191,
+              "column": 6
+            },
+            "end": {
+              "line": 269,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "preProcessHaxNodeToContent",
+          "description": "Standard internal callback for responding to\na request from hax-body to convert it to content.\nThis can be used just prior to that callback in order to clean up\nthe element. Calls to make modifications are against a clone\nof the element.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 277,
+              "column": 6
+            },
+            "end": {
+              "line": 283,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "clone"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "demo/index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 61,
+          "column": 12
+        },
+        "end": {
+          "line": 284,
+          "column": 5
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "hax-properties",
+          "description": "haxProperties",
+          "sourceRange": {
+            "file": "bower_components/hax-body-behaviors/hax-body-behaviors.html",
+            "start": {
+              "line": 140,
+              "column": 6
+            },
+            "end": {
+              "line": 154,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object",
+          "inheritedFrom": "HAXBehaviors.PropertiesBehaviors"
+        },
+        {
+          "name": "loading",
+          "description": "Loading state",
+          "sourceRange": {
+            "start": {
+              "line": 69,
+              "column": 8
+            },
+            "end": {
+              "line": 73,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "entity-type",
+          "description": "Type of entity to load",
+          "sourceRange": {
+            "start": {
+              "line": 77,
+              "column": 8
+            },
+            "end": {
+              "line": 80,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "entity-id",
+          "description": "ID of the item to load",
+          "sourceRange": {
+            "start": {
+              "line": 84,
+              "column": 8
+            },
+            "end": {
+              "line": 87,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "entity-display-mode",
+          "description": "Display mode of the entity",
+          "sourceRange": {
+            "start": {
+              "line": 91,
+              "column": 8
+            },
+            "end": {
+              "line": 94,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "entity-end-point",
+          "description": "entity end point updated, change the way we do processing.",
+          "sourceRange": {
+            "start": {
+              "line": 98,
+              "column": 8
+            },
+            "end": {
+              "line": 100,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "body-data",
+          "description": "Body data which is just entity with some encapsulation.",
+          "sourceRange": {
+            "start": {
+              "line": 104,
+              "column": 8
+            },
+            "end": {
+              "line": 108,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "entity-data",
+          "description": "entity data from the end point.",
+          "sourceRange": {
+            "start": {
+              "line": 112,
+              "column": 8
+            },
+            "end": {
+              "line": 115,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "entity-prefix",
+          "description": "Prefix for the entity to be processed",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 8
+            },
+            "end": {
+              "line": 122,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "entity-suffix",
+          "description": "Suffix for the entity to be processed",
+          "sourceRange": {
+            "start": {
+              "line": 126,
+              "column": 8
+            },
+            "end": {
+              "line": 129,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        }
+      ],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "",
+          "range": {
+            "file": "cms-entity.html",
+            "start": {
+              "line": 57,
+              "column": 34
+            },
+            "end": {
+              "line": 57,
+              "column": 47
+            }
+          }
+        }
+      ],
+      "tagname": "cms-entity"
+    },
+    {
+      "description": "`cms-hax`\nA LRN polymer app",
+      "summary": "",
+      "path": "cms-hax.html",
+      "properties": [
+        {
+          "name": "openDefault",
+          "type": "boolean",
+          "description": "Default the panel to open",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 64,
+              "column": 8
+            },
+            "end": {
+              "line": 67,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "hideExportButton",
+          "type": "boolean",
+          "description": "Hide the export button, not a common thing to show\nin this mode but it's possible for debugging",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 72,
+              "column": 8
+            },
+            "end": {
+              "line": 75,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "true"
+        },
+        {
+          "name": "align",
+          "type": "string",
+          "description": "Direction to align the hax edit panel",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 79,
+              "column": 8
+            },
+            "end": {
+              "line": 82,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"right\""
+        },
+        {
+          "name": "endPoint",
+          "type": "string",
+          "description": "Location to save content to.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 86,
+              "column": 8
+            },
+            "end": {
+              "line": 88,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "updatePageData",
+          "type": "string",
+          "description": "Page data, body of text as a string.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 92,
+              "column": 8
+            },
+            "end": {
+              "line": 94,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "appStoreConnection",
+          "type": "Object",
+          "description": "Connection object for talking to an app store.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 98,
+              "column": 8
+            },
+            "end": {
+              "line": 100,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "bodyOffsetLeft",
+          "type": "number",
+          "description": "Offset from the left of the body field",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 104,
+              "column": 8
+            },
+            "end": {
+              "line": 107,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "-164"
+        },
+        {
+          "name": "editMode",
+          "type": "boolean",
+          "description": "State of the panel",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 111,
+              "column": 8
+            },
+            "end": {
+              "line": 115,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_editModeChanged\""
+            }
+          }
+        },
+        {
+          "name": "syncBody",
+          "type": "boolean",
+          "description": "syncBody",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 8
+            },
+            "end": {
+              "line": 122,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "bodyValue",
+          "type": "string",
+          "description": "Only available if syncBody is true; this allows data binding to the value being worked on in hax-body tag",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 126,
+              "column": 8
+            },
+            "end": {
+              "line": 129,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"\""
+        },
+        {
+          "name": "hideMessage",
+          "type": "boolean",
+          "description": "Flag to hide the toast.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 133,
+              "column": 8
+            },
+            "end": {
+              "line": 136,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        }
+      ],
+      "methods": [
+        {
+          "name": "attached",
+          "description": "Attached to the DOM; now we can fire event to the store that\nwe exist and are the thing being edited.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 142,
+              "column": 6
+            },
+            "end": {
+              "line": 167,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_slotRemap",
+          "description": "Slot re-append correction. This helps translate shadow of one to another.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 171,
+              "column": 6
+            },
+            "end": {
+              "line": 197,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "from"
+            },
+            {
+              "name": "to"
+            }
+          ]
+        },
+        {
+          "name": "_haxStorePropertyUpdated",
+          "description": "Store updated, sync.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 201,
+              "column": 6
+            },
+            "end": {
+              "line": 205,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "e"
+            }
+          ]
+        },
+        {
+          "name": "_editModeChanged",
+          "description": "_editModeChanged",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 209,
+              "column": 6
+            },
+            "end": {
+              "line": 220,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newValue"
+            },
+            {
+              "name": "oldValue"
+            }
+          ]
+        },
+        {
+          "name": "_handleUpdateResponse",
+          "description": "_handleUpdateResponse",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 224,
+              "column": 6
+            },
+            "end": {
+              "line": 228,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "e"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "../../demo/index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 58,
+          "column": 12
+        },
+        "end": {
+          "line": 229,
+          "column": 5
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "open-default",
+          "description": "Default the panel to open",
+          "sourceRange": {
+            "start": {
+              "line": 64,
+              "column": 8
+            },
+            "end": {
+              "line": 67,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "hide-export-button",
+          "description": "Hide the export button, not a common thing to show\nin this mode but it's possible for debugging",
+          "sourceRange": {
+            "start": {
+              "line": 72,
+              "column": 8
+            },
+            "end": {
+              "line": 75,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "align",
+          "description": "Direction to align the hax edit panel",
+          "sourceRange": {
+            "start": {
+              "line": 79,
+              "column": 8
+            },
+            "end": {
+              "line": 82,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "end-point",
+          "description": "Location to save content to.",
+          "sourceRange": {
+            "start": {
+              "line": 86,
+              "column": 8
+            },
+            "end": {
+              "line": 88,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "update-page-data",
+          "description": "Page data, body of text as a string.",
+          "sourceRange": {
+            "start": {
+              "line": 92,
+              "column": 8
+            },
+            "end": {
+              "line": 94,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "app-store-connection",
+          "description": "Connection object for talking to an app store.",
+          "sourceRange": {
+            "start": {
+              "line": 98,
+              "column": 8
+            },
+            "end": {
+              "line": 100,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "body-offset-left",
+          "description": "Offset from the left of the body field",
+          "sourceRange": {
+            "start": {
+              "line": 104,
+              "column": 8
+            },
+            "end": {
+              "line": 107,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "edit-mode",
+          "description": "State of the panel",
+          "sourceRange": {
+            "start": {
+              "line": 111,
+              "column": 8
+            },
+            "end": {
+              "line": 115,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "sync-body",
+          "description": "syncBody",
+          "sourceRange": {
+            "start": {
+              "line": 119,
+              "column": 8
+            },
+            "end": {
+              "line": 122,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "body-value",
+          "description": "Only available if syncBody is true; this allows data binding to the value being worked on in hax-body tag",
+          "sourceRange": {
+            "start": {
+              "line": 126,
+              "column": 8
+            },
+            "end": {
+              "line": 129,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "hide-message",
+          "description": "Flag to hide the toast.",
+          "sourceRange": {
+            "start": {
+              "line": 133,
+              "column": 8
+            },
+            "end": {
+              "line": 136,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [
+        {
+          "description": "",
+          "name": "autoloader",
+          "range": {
+            "file": "cms-hax.html",
+            "start": {
+              "line": 34,
+              "column": 36
+            },
+            "end": {
+              "line": 34,
+              "column": 67
+            }
+          }
+        },
+        {
+          "description": "",
+          "name": "",
+          "range": {
+            "file": "cms-hax.html",
+            "start": {
+              "line": 35,
+              "column": 30
+            },
+            "end": {
+              "line": 35,
+              "column": 43
+            }
+          }
+        }
+      ],
+      "tagname": "cms-hax"
+    }
+  ]
+}
