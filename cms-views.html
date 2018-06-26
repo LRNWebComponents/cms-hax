@@ -138,6 +138,11 @@ Render and process a  / views from a content management system.
        */
       _handleviewsResponse: function(newValue, oldValue) {
         if (newValue !== null && typeof newValue.content !== typeof undefined) {
+          // store the text and url callbacks
+          if (document.getElementById('cmstokenidtolockonto') != null) {
+            document.getElementById('cmstokenidtolockonto').setAttribute('href', newValue.editEndpoint);
+            document.getElementById('cmstokenidtolockonto').innerHTML = newValue.editText;
+          }
           // wipe our own slot here
           this.wipeSlot(Polymer.dom(this));
           // now inject the content we got
@@ -244,23 +249,33 @@ Render and process a  / views from a content management system.
           },
           'saveOptions': {
             'wipeSlot': true,
+            'unsetAttributes': [
+              'loading',
+              'views-data',
+              'body-data',
+              'views-end-point'
+            ]
           },
         };
         this.setHaxProperties(props);
       },
       /**
-       * Standard internal callback for responding to
-       * a request from hax-body to convert it to content.
-       * This can be used just prior to that callback in order to clean up
-       * the element. Calls to make modifications are against a clone
-       * of the element.
+       * Implements getHaxJSONSchema post processing callback.
        */
-      preProcessHaxNodeToContent: function(clone) {
-        clone.removeAttribute('loading');
-        clone.removeAttribute('views-data');
-        clone.removeAttribute('body-data');
-        clone.removeAttribute('views-end-point');
-        return clone;
+      postProcessgetHaxJSONSchema: function (schema) {
+        schema.properties['__editThis'] = {
+          'type': 'string',
+          'component': {
+            'name': 'a',
+            'properties': {
+              'id': 'cmstokenidtolockonto',
+              'href': '',
+              'target': '_blank'
+            },
+            'slot': 'Edit this view'
+          },
+        }
+        return schema;
       },
     });
   </script>

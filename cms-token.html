@@ -27,6 +27,7 @@ Render and process a shortcode / token from a content management system.
         transition: .6s all ease;
         background-color: transparent;
       }
+
       paper-spinner {
         visibility: hidden;
         opacity: 0;
@@ -34,31 +35,31 @@ Render and process a shortcode / token from a content management system.
         width: 80px;
         padding: 16px;
       }
+
       #replacementcontent {
         visibility: visible;
         opacity: 1;
       }
+
       :host[loading] {
         text-align: center;
       }
+
       :host[loading] paper-spinner {
         visibility: visible;
         opacity: 1;
       }
+
       :host[loading] #replacementcontent {
         opacity: 0;
         visibility: hidden;
       }
     </style>
-    <iron-ajax
-      id="tokenrequest"
-      method="GET"
-      params="[[bodyData]]"
-      url="[[tokenEndPoint]]"
-      handle-as="json"
-      last-response="{{tokenData}}"></iron-ajax>
+    <iron-ajax id="tokenrequest" method="GET" params="[[bodyData]]" url="[[tokenEndPoint]]" handle-as="json" last-response="{{tokenData}}"></iron-ajax>
     <paper-spinner active="[[loading]]"></paper-spinner>
-    <span id="replacementcontent"><slot></slot></span>
+    <span id="replacementcontent">
+      <slot></slot>
+    </span>
   </template>
 
   <script>
@@ -121,7 +122,7 @@ Render and process a shortcode / token from a content management system.
       /**
        * Generate body data.
        */
-      _generateBodyData: function(token) {
+      _generateBodyData: function (token) {
         if (token !== null && token !== '') {
           let tokenPrefix = this.tokenPrefix;
           let tokenSuffix = this.tokenSuffix;
@@ -133,8 +134,13 @@ Render and process a shortcode / token from a content management system.
       /**
        * Handle the response from the token processing endpoint
        */
-      _handleTokenResponse: function(newValue, oldValue) {
+      _handleTokenResponse: function (newValue, oldValue) {
         if (newValue !== null && typeof newValue.content !== typeof undefined) {
+          // store the text and url callbacks
+          if (document.getElementById('cmstokenidtolockonto') != null) {
+            document.getElementById('cmstokenidtolockonto').setAttribute('href', newValue.editEndpoint);
+            document.getElementById('cmstokenidtolockonto').innerHTML = newValue.editText;
+          }
           // wipe our own slot here
           this.wipeSlot(Polymer.dom(this));
           // now inject the content we got
@@ -143,7 +149,7 @@ Render and process a shortcode / token from a content management system.
             frag.innerHTML = newValue.content;
             let newNode = frag.cloneNode(true);
             Polymer.dom(this).appendChild(newNode);
-            setTimeout( () => {
+            setTimeout(() => {
               this.loading = false;
             }, 600);
           });
@@ -152,7 +158,7 @@ Render and process a shortcode / token from a content management system.
       /**
        * wipe out the slot
        */
-      wipeSlot: function(element) {
+      wipeSlot: function (element) {
         while (element.firstChild !== null) {
           element.removeChild(element.firstChild);
         }
@@ -160,7 +166,7 @@ Render and process a shortcode / token from a content management system.
       /**
        * Token end point changed
        */
-      _tokenChanged: function(newValue, oldValue) {
+      _tokenChanged: function (newValue, oldValue) {
         // ensure we have something and are not loading currently
         if (typeof newValue !== typeof undefined && newValue !== '' && !this.loading) {
           // support going from a null element to a real one
@@ -178,7 +184,7 @@ Render and process a shortcode / token from a content management system.
       /**
        * Attached to the DOM, now fire.
        */
-      attached: function() {
+      attached: function () {
         if (typeof this.token !== typeof undefined && this.token !== null && this.token !== '') {
           let slot = Polymer.dom(this).getEffectiveChildNodes();
           // only kick off request if there's nothing in it
@@ -193,7 +199,8 @@ Render and process a shortcode / token from a content management system.
               this.loading = true;
               this.async(() => {
                 this.$.tokenrequest.generateRequest();
-              });            }
+              });
+            }
           }
         }
         // Establish hax property binding
@@ -234,23 +241,33 @@ Render and process a shortcode / token from a content management system.
           },
           'saveOptions': {
             'wipeSlot': true,
+            'unsetAttributes': [
+              'loading',
+              'token-data',
+              'body-data',
+              'token-end-point'
+            ]
           },
         };
         this.setHaxProperties(props);
       },
       /**
-       * Standard internal callback for responding to
-       * a request from hax-body to convert it to content.
-       * This can be used just prior to that callback in order to clean up
-       * the element. Calls to make modifications are against a clone
-       * of the element.
+       * Implements getHaxJSONSchema post processing callback.
        */
-      preProcessHaxNodeToContent: function(clone) {
-        clone.removeAttribute('loading');
-        clone.removeAttribute('token-data');
-        clone.removeAttribute('body-data');
-        clone.removeAttribute('token-end-point');
-        return clone;
+      postProcessgetHaxJSONSchema: function (schema) {
+        schema.properties['__editThis'] = {
+          'type': 'string',
+          'component': {
+            'name': 'a',
+            'properties': {
+              'id': 'cmstokenidtolockonto',
+              'href': '',
+              'target': '_blank'
+            },
+            'slot': 'Edit this content'
+          },
+        }
+        return schema;
       },
     });
   </script>
