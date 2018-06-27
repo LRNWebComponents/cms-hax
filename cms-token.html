@@ -125,6 +125,23 @@ Render and process a shortcode / token from a content management system.
           type: String,
           value: ']',
         },
+        /**
+         * 
+         */
+        _displayMode: {
+          type: String,
+          value: 'full',
+          observer: '_displayModeChanged',
+        }
+      },
+      /**
+       * Display mode value updated.
+       */
+      _displayModeChanged: function (newValue, oldValue) {
+        if (typeof newValue !== typeof undefined && newValue != '' && typeof this.token !== typeof undefined) {
+          // @todo need more sanity checks then this to get default and replace better
+          this.token = this.token.replace(oldValue, newValue);
+        }
       },
       /**
        * Generate body data.
@@ -272,7 +289,7 @@ Render and process a shortcode / token from a content management system.
                 'description': 'Token from our CMS',
                 'inputMethod': 'textfield',
                 'icon': 'editor:title',
-              },
+              }
             ],
             'advanced': [
             ]
@@ -293,18 +310,28 @@ Render and process a shortcode / token from a content management system.
        * Implements getHaxJSONSchema post processing callback.
        */
       postProcessgetHaxJSONSchema: function (schema) {
+        let href = '';
+        let slot = 'Edit';
+        // if we have values populate them
+        if (typeof this.tokenData !== typeof undefined) {
+          href = this.tokenData.editEndpoint;
+          slot = this.tokenData.editText;
+          for (var i in this.tokenData.schema) {
+            schema.properties[i] = this.tokenData.schema[i];
+          }
+        }
         schema.properties['__editThis'] = {
           'type': 'string',
           'component': {
             'name': 'a',
             'properties': {
               'id': 'cmstokenidtolockonto',
-              'href': '',
+              'href': href,
               'target': '_blank'
             },
-            'slot': 'Edit this content'
+            'slot': slot
           },
-        }
+        };
         return schema;
       },
     });
