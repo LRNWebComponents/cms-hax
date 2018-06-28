@@ -32,9 +32,6 @@ A LRN polymer app
         box-sizing: content-box;
       }
     </style>
-    <div id="bodyslot" hidden>
-      <slot></slot>
-    </div>
     <iron-ajax id="pageupdateajax" url="[[endPoint]]" method="[[method]]" body="[[updatePageData]]" content-type="application/json"
       handle-as="json" on-response="_handleUpdateResponse"></iron-ajax>
     <paper-toast id="toast" horizontal-align="left"></paper-toast>
@@ -174,6 +171,33 @@ A LRN polymer app
           type: Boolean,
           computed: '_computeRedirectOnSave(redirectLocation)',
         },
+        /**
+         * Reference to activeBody.
+         */
+        activeHaxBody: {
+          type: Object,
+          observer: '_activeHaxBodyUpdated',
+        },
+        __imported: {
+          type: Boolean,
+          value: false,
+        },
+      },
+      /**
+       * Ensure we've imported our content on initial setup
+       */
+      _activeHaxBodyUpdated: function (newValue, oldValue) {
+        // ensure we import our content once we get an initial registration of active body
+        if (newValue != null && !this.__imported) {
+          this.__imported = true;
+          // see what's inside of this, in a template tag
+          let children = this.queryEffectiveChildren('template');
+          // convert this template content into the real thing
+          // this helps with correctly preserving everything on the way down
+          if (typeof children !== typeof undefined) {
+            newValue.importContent(children.innerHTML);
+          }
+        }
       },
       /**
        * Calculate if we have anywhere to redirect to.
@@ -185,18 +209,18 @@ A LRN polymer app
         return false;
       },
       /**
+       * Created life cycle
+       */
+      created: function() {
+        document.body.addEventListener('hax-store-property-updated', this._haxStorePropertyUpdated.bind(this));
+      },
+      /**
        * Attached to the DOM; now we can fire event to the store that
        * we exist and are the thing being edited.
        */
       attached: function () {
         this.__lock = false;
-        document.body.addEventListener('hax-store-property-updated', this._haxStorePropertyUpdated.bind(this));
         document.body.addEventListener('hax-save', this._saveFired.bind(this));
-        // see what's inside of this, in a template tag
-        let children = this.queryEffectiveChildren('template');
-        // convert this template content into the real thing
-        // this helps with correctly preserving everything on the way down
-        Polymer.HaxStore.instance.activeHaxBody.importContent(children.innerHTML);
         // open things by default and set state for edit mode
         if (this.openDefault) {
           Polymer.HaxStore.write('editMode', true, this);
@@ -215,40 +239,13 @@ A LRN polymer app
         }
       },
       /**
-       * Slot re-append correction. This helps translate shadow of one to another.
-       */
-      _slotRemap: function (from, to) {
-        // add HTML to a div which makes it's DOM unpack
-        let tmp = from;
-        // trap for text without wrapping HTML tags
-        if (tmp.firstChild == null) {
-          var tmp2 = document.createElement('p');
-          tmp2.innerHTML = tmp.innerHTML;
-          tmp = document.createElement('div');
-          tmp.innerHTML = tmp2.innerHTML;
-        }
-        else if (typeof tmp.firstChild.length !== typeof undefined) {
-          var tmp2 = document.createElement('p');
-          tmp2.innerHTML = tmp.innerHTML;
-          tmp = document.createElement('div');
-          tmp.innerHTML = tmp2.innerHTML;
-        }
-        // same as above but in reverse; now take stuf from what
-        // came across and correctly add it into the slot
-        while (tmp.firstChild) {
-          Polymer.dom(to).appendChild(tmp.firstChild);
-        }
-        // clear from
-        let slot = from;
-        while (slot.firstChild !== null) {
-          slot.removeChild(slot.firstChild);
-        }
-      },
-      /**
        * Store updated, sync.
        */
       _haxStorePropertyUpdated: function (e) {
         if (e.detail && typeof e.detail.value !== typeof undefined && e.detail.property) {
+          if (typeof e.detail.value === 'object') {
+            this.set(e.detail.property, null);
+          }
           this.set(e.detail.property, e.detail.value);
         }
       },

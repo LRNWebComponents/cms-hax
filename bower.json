@@ -4,12 +4,13 @@
   "main": "cms-hax.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.10.1",
-    "hax-body": "LRNWebComponents/hax-body#^0.20.5",
+    "hax-body": "LRNWebComponents/hax-body#^0.20.6",
     "hax-body-behaviors": "LRNWebComponents/hax-body-behaviors#^1.12.4",
     "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#^2.1.0",
     "iron-selector": "PolymerElements/iron-selector#^2.1.0",
     "web-animations-js": "web-animations/web-animations-js#^2.2.0",
-    "paper-spinner": "PolymerElements/paper-spinner#^2.1.0"
+    "paper-spinner": "PolymerElements/paper-spinner#^2.1.0",
+    "schema-behaviors": "LRNWebComponents/schema-behaviors#^1.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
