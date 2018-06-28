@@ -9,10 +9,10 @@ This project intentionally removes flexibility from the way it implements hax-bo
 This is a sample of what that would look like:
 ```
   <cms-hax open-default end-point="some/backend/endpoint" app-store-connection="sample-store.json">
-    <lrn-table slot="autoloader"></lrn-table>
-    <video-player slot="autoloader"></video-player>
+    <template>
     <h2>The heading to edit</h2>
     <p>A whole bunch of text that will be wrapped to edit</p>
+    </template>
   </cms-hax>
 
 ```
