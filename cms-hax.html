@@ -43,7 +43,8 @@ A LRN polymer app
     </div>
     <hax-store hidden app-store="[[appStoreConnection]]" valid-tag-list="[[allowedTags]]"></hax-store>
     <hax-autoloader id="loader" hidden></hax-autoloader>
-    <hax-panel id="panel" hide-export-button="{{hideExportButton}}" align="[[align]]"></hax-panel>
+    <hax-panel id="panel" hide-export-button="{{hideExportButton}}" hide-panel-ops="[[hidePanelOps]]" hide-preferences-button="[[hidePreferencesButton]]"
+      align="[[align]]"></hax-panel>
     <hax-body id="body" context-offset-left="[[bodyOffsetLeft]]"></hax-body>
     <hax-manager></hax-manager>
     <hax-app-picker></hax-app-picker>
@@ -65,12 +66,26 @@ A LRN polymer app
           value: false,
         },
         /**
-         * Hide the export button, not a common thing to show
-         * in this mode but it's possible for debugging
+         * Hide the export button, showing it is good for developers
+         * or those doing QA testing of new elements.
          */
         hideExportButton: {
           type: Boolean,
           value: true,
+        },
+        /**
+         * Hide the panel operations (save and cancel),
+         */
+        hidePanelOps: {
+          type: Boolean,
+          value: false,
+        },
+        /**
+         * Hide preferences button
+         */
+        hidePreferencesButton: {
+          type: Boolean,
+          value: false,
         },
         /**
          * Direction to align the hax edit panel
@@ -149,6 +164,28 @@ A LRN polymer app
           type: Boolean,
           value: false,
         },
+        /**
+         * Optional URL to redirect to once we save.
+         */
+        redirectLocation: {
+          type: String,
+        },
+        /**
+         * Option to redirect once we save successfully
+         */
+        redirectOnSave: {
+          type: Boolean,
+          computed: '_computeRedirectOnSave(redirectLocation)',
+        },
+      },
+      /**
+       * Calculate if we have anywhere to redirect to.
+       */
+      _computeRedirectOnSave: function (redirectLocation) {
+        if (typeof redirectLocation !== typeof undefined) {
+          return true;
+        }
+        return false;
       },
       /**
        * Attached to the DOM; now we can fire event to the store that
@@ -234,6 +271,16 @@ A LRN polymer app
       _handleUpdateResponse: function (e) {
         if (!this.hideMessage) {
           this.$.toast.show('Saved!');
+          // support auto redirecting on save if that's been requested
+          // in the integration point
+          if (this.redirectOnSave) {
+            setTimeout(() => {
+              // toggle so state is correct when we go to save
+              this.$.panel.toggle();
+              // trigger redirect
+              window.location = this.redirectLocation;
+            }, 1000);
+          }
         }
       },
     });
