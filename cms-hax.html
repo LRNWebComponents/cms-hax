@@ -32,15 +32,12 @@ A LRN polymer app
         box-sizing: content-box;
       }
     </style>
-    <iron-ajax id="pageupdateajax" url="[[endPoint]]" method="[[method]]" body="[[updatePageData]]" content-type="application/json"
-      handle-as="json" on-response="_handleUpdateResponse"></iron-ajax>
-    <paper-toast id="toast" horizontal-align="left"></paper-toast>
-    <div id="autoloaderslot" hidden>
-      <slot name="autoloader"></slot>
-    </div>
     <div id="bodyslot" hidden>
       <slot></slot>
     </div>
+    <iron-ajax id="pageupdateajax" url="[[endPoint]]" method="[[method]]" body="[[updatePageData]]" content-type="application/json"
+      handle-as="json" on-response="_handleUpdateResponse"></iron-ajax>
+    <paper-toast id="toast" horizontal-align="left"></paper-toast>
     <hax-store hidden app-store="[[appStoreConnection]]" valid-tag-list="[[allowedTags]]"></hax-store>
     <hax-autoloader id="loader" hidden></hax-autoloader>
     <hax-panel id="panel" hide-export-button="{{hideExportButton}}" hide-panel-ops="[[hidePanelOps]]" hide-preferences-button="[[hidePreferencesButton]]"
@@ -195,16 +192,15 @@ A LRN polymer app
         this.__lock = false;
         document.body.addEventListener('hax-store-property-updated', this._haxStorePropertyUpdated.bind(this));
         document.body.addEventListener('hax-save', this._saveFired.bind(this));
-        // @todo, step through slot for both areas injecting them CORRECTLY into the right area
-        setTimeout(() => {
-          this._slotRemap(this.$.autoloaderslot, this.$.loader);
-          this._slotRemap(this.$.bodyslot, Polymer.HaxStore.instance.activeHaxBody);
-          // open things by default and set state for edit mode
-          if (this.openDefault) {
-            Polymer.HaxStore.write('editMode', true, this);
-          }
-        }, 100);
-
+        // see what's inside of this, in a template tag
+        let children = this.queryEffectiveChildren('template');
+        // convert this template content into the real thing
+        // this helps with correctly preserving everything on the way down
+        Polymer.HaxStore.instance.activeHaxBody.importContent(children.innerHTML);
+        // open things by default and set state for edit mode
+        if (this.openDefault) {
+          Polymer.HaxStore.write('editMode', true, this);
+        }
         // notice ANY change to body and bubble up, only when we are attached though
         if (this.syncBody) {
           Polymer.dom(this.$.body).observeNodes(function (info) {
