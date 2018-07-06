@@ -21,7 +21,7 @@ Render and process a shortcode / token from a content management system.
   <template strip-whitespace>
     <style>
       :host {
-        display: block;
+        display: inline;
         min-width: 112px;
         min-height: 112px;
         transition: .6s all ease;
@@ -31,9 +31,9 @@ Render and process a shortcode / token from a content management system.
       paper-spinner {
         visibility: hidden;
         opacity: 0;
-        height: 80px;
-        width: 80px;
-        padding: 16px;
+        height: 0;
+        width: 0;
+        padding: 0;
       }
 
       #replacementcontent {
@@ -48,6 +48,9 @@ Render and process a shortcode / token from a content management system.
       :host[loading] paper-spinner {
         visibility: visible;
         opacity: 1;
+        height: 80px;
+        width: 80px;
+        padding: 16px;
       }
 
       :host[loading] #replacementcontent {
